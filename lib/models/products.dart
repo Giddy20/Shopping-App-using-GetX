@@ -1,6 +1,7 @@
 // To parse this JSON data, do
 //
 //     final product = productFromJson(jsonString);
+import 'package:get/state_manager.dart';
 
 import 'dart:convert';
 
@@ -50,6 +51,8 @@ class Product {
   String productApiUrl;
   String apiFeaturedImage;
   List<ProductColor> productColors;
+
+  var isFavorite = false.obs;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     id: json["id"],

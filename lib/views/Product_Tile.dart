@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shopping_app_api/Screens/Products%20Details.dart';
 import 'package:shopping_app_api/controller/productController.dart';
 import 'package:shopping_app_api/models/products.dart';
 
@@ -7,8 +8,9 @@ import 'package:shopping_app_api/models/products.dart';
 class ProductTile extends StatelessWidget {
 
   final Product product;
+  final int index;
 
-  ProductTile({this.product});
+  ProductTile({this.product, this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +23,37 @@ class ProductTile extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Container(
-                  height: 180,
-                  width: double.infinity,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  child: Image.network(
-                    product.imageLink,
-                    fit: BoxFit.cover,
+                InkWell(
+                  onTap: (){
+                    Get.to(ProductDetails(index: index,));
+                  },
+                  child: Container(
+                    height: 180,
+                    width: double.infinity,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    child: Image.network(
+                      product.imageLink,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
+                Positioned(
+                  right: 0,
+                  child: Obx(() => CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      icon: product.isFavorite.value
+                          ? Icon(Icons.favorite_rounded)
+                          : Icon(Icons.favorite_border),
+                      onPressed: () {
+                        product.isFavorite.toggle();
+                      },
+                    ),
+                  )),
+                )
 
               ],
             ),
